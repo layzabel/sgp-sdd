@@ -1,0 +1,22 @@
+# Mesmo projeto compose do my-project: reaproveita o container e os volumes do SonarQube já
+# configurado (perfil "TCC TypeScript", Quality Gate "TCC"), em vez de subir um servidor novo e
+# vazio na mesma porta 9000.
+name: my-project
+
+services:
+  sonarqube:
+    image: sonarqube:community
+    ports:
+      - '9000:9000'
+    environment:
+      # banco H2 embutido (sem SONAR_JDBC_URL): uso local de avaliação
+      SONAR_TELEMETRY_ENABLE: 'false'
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+
+volumes:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
