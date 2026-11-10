@@ -225,11 +225,11 @@ Versões consultadas no registro npm em 2026-11-10: `next` 16.4.6, `react`/`reac
 | ------ | ---- | ---------- | ----------------------- |
 | `next` 16.4.6 | prod | Framework exigido pela constituição (App Router, export estático) | — (fixado pela constituição) |
 | `react`, `react-dom` 19.3.1 | prod | Base do Next.js | — |
-| `@types/react`, `@types/react-dom` | dev | Tipos para `strict` | — |
+| `@types/react`, `@types/react-dom` 19.3.0 | dev | Tipos para `strict` | — |
 | `eslint-config-next` 16.4.6 | dev | Regras Next/React/hooks/`jsx-a11y` | Configurar `eslint-plugin-react-hooks` e `jsx-a11y` à mão (mais configuração) |
 | `@playwright/test` 1.65.0 | dev | E2E em Chrome, Firefox e Edge | Cypress (sem Firefox/Edge no mesmo runner) |
 | `@axe-core/playwright` 4.14.0 | dev | Verificação automática WCAG 2.1 AA | Só verificação manual (não reproduzível) |
-| `@testing-library/react` 16.3.3, `@testing-library/user-event` | dev | Testes de componente medidos na cobertura | Só E2E (sem lcov de `src/`) |
+| `@testing-library/react` 16.3.3, `@testing-library/user-event` 14.6.9 | dev | Testes de componente medidos na cobertura | Só E2E (sem lcov de `src/`) |
 | `jsdom` 31.0.0 | dev | DOM para Vitest | `happy-dom` (suporte menor a `<dialog>`) |
 
 Sem dependências de estado, validação, datas, UI, CSS ou IDs (ver R4, R6, R8, R9, R10).

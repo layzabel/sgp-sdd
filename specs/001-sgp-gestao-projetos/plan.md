@@ -56,7 +56,7 @@ duplicação ≤ 3%
 | I. Interface web desktop e acessibilidade | Layout desktop funcional em telas menores; 2 últimas versões de Chrome/Edge/Firefox; WCAG 2.1 AA; teclado; confirmação de exclusão; erros em pt-BR | Layout responsivo ≥ 360 px; E2E em Chromium, Firefox e Edge; axe-core em cada tela; `<dialog>` modal nativo para exclusão; mensagens com correção ([contracts/mensagens.md](contracts/mensagens.md)); `eslint-plugin-jsx-a11y` via `eslint-config-next` | ✅ |
 | II. Segurança e proteção de dados (INEGOCIÁVEL) | Dados só no navegador; nada enviado a terceiros; validação antes de salvar; sem segredos versionados | Exportação estática sem servidor; `localStorage`; ESLint proíbe `fetch`/XHR/WebSocket/`sendBeacon` em `src/`; sem `next/font/google`, analytics ou recursos externos; E2E `privacidade.spec.ts` falha em qualquer requisição externa ou não-GET; repositório valida e só grava se válido; nenhum segredo novo (`.env*` já no `.gitignore`) | ✅ |
 | III. Testes automatizados | Testes unitários do domínio; E2E dos fluxos principais; cobertura ≥ 80% no código novo; build/lint/tipos/testes passando | Vitest em `domain/` e `data/` (todas as regras FR-005…FR-030, FR-040); Testing Library em `ui/`; Playwright por história (US1–US6) + persistência, privacidade, teclado, responsivo, falha de gravação, desempenho; `verify` passa a incluir `build` e `e2e` | ✅ |
-| IV. Arquitetura testável e dependências justificadas | Domínio separado de UI e dados; repositório testável; dependências justificadas; solução mais simples | `src/domain` puro (sem React/DOM); `src/data` com `Armazenamento` injetável e implementação em memória; tabela de dependências em research.md; sem bibliotecas de estado/validação/UI | ✅ |
+| IV. Arquitetura testável e dependências justificadas | Domínio separado de UI e dados; repositório testável; dependências justificadas; solução mais simples | `src/domain` puro (sem React/DOM); `src/data` com `Armazenamento` injetável e implementação em memória; tabela de dependências na seção "Dependências novas" deste plano; sem bibliotecas de estado/validação/UI | ✅ |
 | V. Qualidade mensurável (SonarQube) | Quality Gate `TCC`; métricas registradas; `strict`; sem `any`; ESLint/Prettier limpos | Escopo Sonar `app` (`src`) já configurado; regras `complexity: 10` e `sonarjs/cognitive-complexity: 15` já no ESLint (aplicam-se a `.tsx`); validação dirigida por tabela para evitar duplicação entre cadastros; componentes genéricos de lista/formulário/detalhes | ✅ |
 | VI. Rastreabilidade de IA | `metricas-ia.md` com linha por etapa; snapshot Sonar ao fim de `implement` e de cada `correcao-N`; consolidado | `specs/001-sgp-gestao-projetos/metricas-ia.md` alimentado por `npm run metrics:ia` (sessão de registro separada) e `npm run sonar -- --etapa …`; consolidado por `npm run metrics:consolidar` | ✅ (registro da etapa `plan` pendente — feito após esta sessão) |
 | Restrições técnicas | Next.js App Router, React, TS strict, Node 24 via `engines` e `.nvmrc`; persistência local encapsulada; Vitest; E2E definido no plano; pt-BR | Todas atendidas; E2E = Playwright | ✅ |
@@ -177,6 +177,23 @@ ação do usuário ──► repositorio.criar*/atualizar*/excluir*  ──► d
                                    ▼                                    ▼
                          Resultado { ok: true }            Resultado { ok: false, erro }
 ```
+
+## Dependências novas (justificativa exigida pelo Princípio IV)
+
+Todas com versão exata no `package.json`. Detalhes das decisões em [research.md](research.md).
+
+| Pacote | Tipo | Finalidade | Alternativa considerada |
+| ------ | ---- | ---------- | ----------------------- |
+| `next` 16.4.6 | prod | Framework exigido pela constituição (App Router, export estático) | — (fixado pela constituição) |
+| `react`, `react-dom` 19.3.1 | prod | Base do Next.js | — |
+| `@types/react`, `@types/react-dom` 19.3.0 | dev | Tipos para `strict` | — |
+| `eslint-config-next` 16.4.6 | dev | Regras Next/React/hooks/`jsx-a11y` | Configurar `eslint-plugin-react-hooks` e `jsx-a11y` à mão (mais configuração) |
+| `@playwright/test` 1.65.0 | dev | E2E em Chrome, Firefox e Edge | Cypress (sem Firefox/Edge no mesmo runner) |
+| `@axe-core/playwright` 4.14.0 | dev | Verificação automática WCAG 2.1 AA | Só verificação manual (não reproduzível) |
+| `@testing-library/react` 16.3.3, `@testing-library/user-event` 14.6.9 | dev | Testes de componente medidos na cobertura | Só E2E (sem lcov de `src/`) |
+| `jsdom` 31.0.0 | dev | DOM para Vitest | `happy-dom` (suporte menor a `<dialog>`) |
+
+Sem dependências de estado, validação, datas, UI, CSS ou IDs (research R4, R6, R8, R9, R10).
 
 ## Riscos e mitigação
 
