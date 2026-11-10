@@ -1,0 +1,24 @@
+.dialogo {
+  max-width: min(32rem, calc(100vw - 2rem));
+  padding: 1.5rem;
+  border: 2px solid var(--cor-borda-forte);
+  border-radius: 8px;
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+}
+
+.dialogo::backdrop {
+  background: rgb(0 0 0 / 50%);
+}
+
+.titulo {
+  margin-top: 0;
+  font-size: 1.25rem;
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}

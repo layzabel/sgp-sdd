@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+  esbuild: { jsx: 'automatic' },
   test: {
     projects: [
       {
@@ -9,6 +10,15 @@ export default defineConfig({
           name: 'app',
           environment: 'node',
           include: ['tests/unit/app/**/*.test.ts'],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'ui',
+          environment: 'jsdom',
+          include: ['tests/unit/ui/**/*.test.tsx'],
+          setupFiles: ['tests/unit/ui/setup.ts'],
         },
       },
       {

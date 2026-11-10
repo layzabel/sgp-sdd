@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["esnext"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noEmit": true,
@@ -13,9 +13,26 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "jsx": "react-jsx",
     "types": ["node"],
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts", "vitest.config.mts"],
-  "exclude": ["node_modules", "scripts", "tests/fixtures/**"]
+  "include": [
+    "next-env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    ".next/types/**/*.ts",
+    "vitest.config.mts",
+    "playwright.config.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "scripts", "tests/fixtures/**", "out", ".next"]
 }

@@ -6,3 +6,8 @@ specs/
 .specify/
 .claude/
 docs/metricas/
+.next/
+out/
+next-env.d.ts
+playwright-report/
+test-results/

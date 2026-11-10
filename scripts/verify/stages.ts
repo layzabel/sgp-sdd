@@ -3,8 +3,8 @@ import type { Exec } from '../lib/exec.ts';
 export type Command = { cmd: string; args: string[] };
 
 export type Stage = {
-  name: 'tipos' | 'padroes' | 'testes';
-  code: 1 | 2 | 3;
+  name: 'tipos' | 'padroes' | 'testes' | 'build' | 'e2e';
+  code: 1 | 2 | 3 | 4 | 5;
   commands: Command[];
 };
 
@@ -34,6 +34,16 @@ export const STAGES: readonly Stage[] = [
     name: 'testes',
     code: 3,
     commands: [{ cmd: 'npx', args: ['vitest', 'run', '--coverage'] }],
+  },
+  {
+    name: 'build',
+    code: 4,
+    commands: [{ cmd: 'npm', args: ['run', 'build'] }],
+  },
+  {
+    name: 'e2e',
+    code: 5,
+    commands: [{ cmd: 'npx', args: ['playwright', 'test'] }],
   },
 ];
 

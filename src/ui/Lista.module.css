@@ -1,0 +1,89 @@
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lista > p {
+  margin: 0;
+}
+
+.criterios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+}
+
+.criterio {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.criterio label {
+  font-weight: 600;
+}
+
+.contagem {
+  color: var(--cor-texto-suave);
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.legenda {
+  text-align: left;
+  font-weight: 700;
+  padding-bottom: 0.5rem;
+}
+
+.tabela th,
+.tabela td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--cor-borda);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.tabela th {
+  background: var(--cor-fundo-suave);
+}
+
+/* Abaixo de 640 px a tabela vira uma lista de cartões, com os mesmos dados e ordem. */
+@media (max-width: 639.98px) {
+  .tabela,
+  .tabela tbody,
+  .tabela tr,
+  .tabela td {
+    display: block;
+  }
+
+  .tabela thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .tabela tr {
+    margin-bottom: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+  }
+
+  .tabela td {
+    padding: 0.3rem 0;
+    border-bottom: none;
+  }
+
+  .tabela td::before {
+    content: attr(data-rotulo) ': ';
+    font-weight: 700;
+  }
+}

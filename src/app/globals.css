@@ -1,0 +1,180 @@
+/* Estilos globais do SGP: fonte do sistema, cores com contraste AA e foco visível (research R10). */
+
+:root {
+  --cor-texto: #1b1f24;
+  --cor-texto-suave: #4a5260;
+  --cor-fundo: #ffffff;
+  --cor-fundo-suave: #f1f3f6;
+  --cor-borda: #c4cad3;
+  --cor-borda-forte: #5c6573;
+  --cor-link: #0b57b0;
+  --cor-primaria: #0b57b0;
+  --cor-primaria-texto: #ffffff;
+  --cor-perigo: #b3261e;
+  --cor-perigo-texto: #ffffff;
+  --cor-foco: #c2410c;
+  --cor-menu-fundo: #14325c;
+  --cor-menu-texto: #ffffff;
+  --cor-menu-atual-fundo: #ffffff;
+  --cor-menu-atual-texto: #14325c;
+  --cor-sucesso-texto: #14532d;
+  --cor-sucesso-fundo: #e8f5ec;
+  --cor-sucesso-borda: #2e7d4f;
+  --cor-erro-texto: #8a1c14;
+  --cor-erro-fundo: #fdecea;
+  --cor-erro-borda: #b3261e;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-size: 100%;
+  line-height: 1.5;
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+}
+
+body {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+a {
+  color: var(--cor-link);
+}
+
+:focus-visible {
+  outline: 3px solid var(--cor-foco);
+  outline-offset: 2px;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+  color: inherit;
+}
+
+input,
+select,
+textarea {
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: 4px;
+  background: var(--cor-fundo);
+  max-width: 100%;
+}
+
+button,
+.botao-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: 6px;
+  background: var(--cor-fundo-suave);
+  color: var(--cor-texto);
+  text-decoration: none;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.botao-primario,
+.botao-link {
+  background: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+  color: var(--cor-primaria-texto);
+}
+
+.botao-perigo {
+  background: var(--cor-perigo);
+  border-color: var(--cor-perigo);
+  color: var(--cor-perigo-texto);
+}
+
+h1 {
+  margin: 0 0 1rem;
+  font-size: 1.75rem;
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: 1.3rem;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.pular {
+  position: absolute;
+  left: 0.5rem;
+  top: -10rem;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  background: var(--cor-fundo);
+  color: var(--cor-link);
+  border: 2px solid var(--cor-foco);
+}
+
+.pular:focus {
+  top: 0.5rem;
+}
+
+.estrutura {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--cor-menu-fundo);
+  color: var(--cor-menu-texto);
+}
+
+.marca {
+  color: var(--cor-menu-texto);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.conteudo {
+  flex: 1;
+  min-width: 0;
+  padding: 1.25rem 1rem 2rem;
+}
+
+.conteudo:focus {
+  outline: none;
+}
+
+/* Telas largas: menu lateral; abaixo de 768 px o menu fica no topo (FR-031, FR-034). */
+@media (min-width: 768px) {
+  .estrutura {
+    flex-direction: row;
+  }
+
+  .cabecalho {
+    flex: 0 0 15rem;
+    padding: 1.25rem 1rem;
+  }
+
+  .conteudo {
+    padding: 1.5rem 2rem 2.5rem;
+  }
+}

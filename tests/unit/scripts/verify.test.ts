@@ -17,10 +17,10 @@ function setup(failAt?: { cmd: string; args: string[] }) {
 }
 
 describe('runStages', () => {
-  it('executa as 3 etapas na ordem e retorna 0', async () => {
+  it('executa as 5 etapas na ordem e retorna 0', async () => {
     const { calls, exec, out, log } = setup();
     await expect(runStages(STAGES, exec, log)).resolves.toBe(0);
-    expect(STAGES.map((s) => s.name)).toEqual(['tipos', 'padroes', 'testes']);
+    expect(STAGES.map((s) => s.name)).toEqual(['tipos', 'padroes', 'testes', 'build', 'e2e']);
     expect(calls).toEqual(
       STAGES.flatMap((s) => s.commands.map((c) => [c.cmd, ...c.args].join(' '))),
     );
@@ -28,8 +28,10 @@ describe('runStages', () => {
       'VERIFY ▶ etapa=tipos',
       'VERIFY ▶ etapa=padroes',
       'VERIFY ▶ etapa=testes',
+      'VERIFY ▶ etapa=build',
+      'VERIFY ▶ etapa=e2e',
     ]);
-    expect(out.at(-1)).toBe('VERIFY OK: 3/3 etapas');
+    expect(out.at(-1)).toBe('VERIFY OK: 5/5 etapas');
   });
 
   it.each(STAGES.map((stage, index) => [stage.name, index] as const))(
@@ -43,7 +45,7 @@ describe('runStages', () => {
       for (const command of later) {
         expect(calls).not.toContain([command.cmd, ...command.args].join(' '));
       }
-      expect(out).not.toContain('VERIFY OK: 3/3 etapas');
+      expect(out).not.toContain('VERIFY OK: 5/5 etapas');
     },
   );
 

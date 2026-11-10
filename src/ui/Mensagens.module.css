@@ -1,0 +1,32 @@
+.mensagem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin: 0 0 1.25rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid;
+  border-radius: 6px;
+}
+
+.mensagem p {
+  margin: 0;
+  flex: 1 1 16rem;
+}
+
+.sucesso {
+  color: var(--cor-sucesso-texto);
+  background: var(--cor-sucesso-fundo);
+  border-color: var(--cor-sucesso-borda);
+}
+
+.erro {
+  color: var(--cor-erro-texto);
+  background: var(--cor-erro-fundo);
+  border-color: var(--cor-erro-borda);
+}
+
+.fechar {
+  flex: 0 0 auto;
+}

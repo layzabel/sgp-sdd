@@ -7,15 +7,17 @@ repositório. Nenhum comando imprime o valor de `SONAR_TOKEN`.
 
 Executa, nesta ordem, parando na primeira falha:
 
-| #   | Etapa (`<nome>`) | Comando interno                                                           | Código de saída se falhar |
-| --- | ---------------- | ------------------------------------------------------------------------- | ------------------------- |
-| 1   | `tipos`          | `tsc --noEmit -p tsconfig.json` e `tsc --noEmit -p scripts/tsconfig.json` | 1                         |
-| 2   | `padroes`        | `eslint . --max-warnings=0` e `prettier --check .`                        | 2                         |
-| 3   | `testes`         | `vitest run --coverage`                                                   | 3                         |
+| #   | Etapa (`<nome>`) | Comando interno                                                             | Código de saída se falhar |
+| --- | ---------------- | --------------------------------------------------------------------------- | ------------------------- |
+| 1   | `tipos`          | `tsc --noEmit -p tsconfig.json` e `tsc --noEmit -p scripts/tsconfig.json`   | 1                         |
+| 2   | `padroes`        | `eslint . --max-warnings=0` e `prettier --check .`                          | 2                         |
+| 3   | `testes`         | `vitest run --coverage`                                                     | 3                         |
+| 4   | `build`          | `npm run build` (`next build`, exportação estática em `out/`)               | 4                         |
+| 5   | `e2e`            | `playwright test` (Chromium, Firefox e Edge quando instalado; serve `out/`) | 5                         |
 
 - Antes de cada etapa: `VERIFY ▶ etapa=<nome>`.
 - Falha: `VERIFY FALHOU: etapa=<nome> (código <n>)` na saída de erro; etapas seguintes não rodam.
-- Sucesso: `VERIFY OK: 3/3 etapas`, código 0.
+- Sucesso: `VERIFY OK: 5/5 etapas`, código 0.
 - A saída das ferramentas é repassada sem filtro (arquivo, linha, coluna, nome da função quando a regra informa, nome do teste).
 - Cobertura gerada em `coverage/` (`index.html`, `lcov.info`); percentual não afeta o código de
   saída.

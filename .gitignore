@@ -4,3 +4,8 @@ coverage/
 *.tsbuildinfo
 .env*
 *.md.tmp
+.next/
+out/
+next-env.d.ts
+playwright-report/
+test-results/
