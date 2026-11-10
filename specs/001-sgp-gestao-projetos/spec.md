@@ -8,6 +8,16 @@
 
 **Input**: User description: "Aplicação web de gerenciamento de projetos de software (SGP), usada no computador por uma equipe de administração para organizar as pessoas envolvidas nos projetos, os times de desenvolvimento e os projetos em andamento, com o registro de relatórios, marcos e cronograma de cada projeto. Todas as funções são operadas pelo administrador do sistema." (a descrição completa fornecida inclui: cadastros de Administradores, Usuários, Desenvolvedores, Times e Projetos; acompanhamento do projeto com relatórios, marcos e cronograma; navegação e interface; dados somente no navegador; itens fora do escopo).
 
+## Clarifications
+
+### Session 2026-11-10
+
+- Q: Em que ordem os registros devem aparecer nas listas principais quando não há busca nem filtro? → A: Ordem alfabética por nome (sem diferenciar maiúsculas/minúsculas e acentos) em todas as listas; a ordem se mantém com busca e filtros aplicados.
+- Q: Quais devem ser os tamanhos máximos dos campos de texto? → A: Nome, cargo, setor, organização, área, tecnologia, atividade e descrição de marco: 100 · e-mail: 254 · telefone: 30 · descrição de time/projeto: 1.000 · texto do relatório: 5.000.
+- Q: As listas principais devem ser divididas em páginas ou mostrar todos os registros de uma vez? → A: Sem paginação: todos os registros que atendem à busca e aos filtros aparecem numa lista única.
+- Q: Nos detalhes do projeto, cada relatório deve mostrar só a data de criação ou a data e a hora? → A: Somente a data (dd/mm/aaaa); o momento completo de criação continua registrado internamente para ordenar os relatórios do mesmo dia.
+- Q: Ao sair de um formulário com alterações não salvas, o sistema deve pedir confirmação? → A: Não; sair do formulário (menu, "Cancelar" ou fechar a aba) descarta as alterações sem pedir confirmação.
+
 ## User Scenarios & Testing *(mandatory)*
 
 O único ator é o **administrador do sistema**, que opera todas as funções sem login. As histórias estão em ordem de prioridade; cada uma pode ser testada e demonstrada de forma independente (quando uma história depende de um time já cadastrado, o teste parte de um time existente).
@@ -141,7 +151,7 @@ O administrador cadastra as pessoas que acompanham os projetos, como clientes e 
 - **Relatórios no mesmo dia**: relatórios criados na mesma data aparecem do mais recente para o mais antigo de acordo com o momento de criação.
 - **Registro inexistente**: ao acessar os detalhes de um registro que não existe mais (por exemplo, por um endereço salvo), o sistema informa que o registro não foi encontrado e oferece retorno à lista.
 - **Falha ao salvar no navegador**: se o armazenamento do navegador estiver indisponível ou cheio, o sistema exibe mensagem de erro, não perde os dados já salvos e mantém o formulário preenchido para nova tentativa.
-- **Abandonar o formulário**: cancelar um cadastro ou edição não altera nenhum dado salvo.
+- **Abandonar o formulário**: cancelar um cadastro ou edição, navegar pelo menu ou fechar a aba com o formulário aberto descarta as alterações não salvas sem pedir confirmação e não altera nenhum dado salvo.
 
 ## Requirements *(mandatory)*
 
@@ -152,11 +162,12 @@ O administrador cadastra as pessoas que acompanham os projetos, como clientes e 
 - **FR-001**: O sistema DEVE permitir cadastrar, consultar (lista e detalhes), atualizar e excluir registros em cada um dos cinco cadastros: Administradores, Usuários, Desenvolvedores, Times e Projetos.
 - **FR-002**: Cada cadastro DEVE conter exatamente os campos definidos na seção Key Entities, sem campos adicionais visíveis ao administrador.
 - **FR-003**: A atualização de qualquer registro DEVE aplicar as mesmas validações do cadastro.
-- **FR-004**: Toda exclusão DEVE exigir confirmação explícita do administrador; cancelar a confirmação NÃO DEVE alterar dados.
+- **FR-004**: Toda exclusão DEVE exigir confirmação explícita do administrador; cancelar a confirmação NÃO DEVE alterar dados. Sair de um formulário com alterações não salvas NÃO exige confirmação: as alterações são descartadas e os dados salvos permanecem inalterados.
 - **FR-005**: O sistema DEVE remover espaços no início e no fim dos campos de texto antes de validar e salvar, e DEVE tratar como vazio um campo formado só por espaços.
 - **FR-006**: O sistema DEVE validar o formato do e-mail (parte local, "@" e domínio com ao menos um ponto, sem espaços) em todos os cadastros que têm e-mail.
 - **FR-007**: As verificações de unicidade (e-mail dentro de cada cadastro de pessoas e nome de time) NÃO DEVEM diferenciar maiúsculas de minúsculas e DEVEM desconsiderar o próprio registro em edição.
-- **FR-008**: As buscas por texto DEVEM localizar registros pelo trecho digitado em qualquer posição do campo, sem diferenciar maiúsculas/minúsculas nem acentos; buscas e filtros de uma mesma lista DEVEM ser combinados (todos os critérios ao mesmo tempo).
+- **FR-008**: As buscas por texto DEVEM localizar registros pelo trecho digitado em qualquer posição do campo, sem diferenciar maiúsculas/minúsculas nem acentos; buscas e filtros de uma mesma lista DEVEM ser combinados (todos os critérios ao mesmo tempo). As listas de Administradores, Usuários, Desenvolvedores, Times e Projetos, assim como as listas de desenvolvedores e projetos nos detalhes de um time, DEVEM ser exibidas em ordem alfabética por nome, sem diferenciar maiúsculas/minúsculas nem acentos, com ou sem busca e filtros aplicados. As listas NÃO DEVEM ser paginadas: todos os registros que atendem à busca e aos filtros DEVEM aparecer numa lista única.
+- **FR-040**: O sistema DEVE limitar o tamanho dos campos de texto (contado após remover os espaços do início e do fim): nome, cargo, setor, organização, área de atuação, principal tecnologia, atividade do cronograma e descrição do marco até 100 caracteres; e-mail até 254; telefone até 30; descrição de time e de projeto até 1.000; texto do relatório até 5.000. Valores acima do limite NÃO DEVEM ser salvos, e a mensagem de erro DEVE informar o limite do campo.
 - **FR-009**: Dados inválidos NÃO DEVEM ser salvos.
 
 **Administradores**
@@ -193,7 +204,7 @@ O administrador cadastra as pessoas que acompanham os projetos, como clientes e 
 **Acompanhamento do projeto**
 
 - **FR-026**: Nos detalhes de um projeto, o administrador DEVE poder criar relatórios com texto livre obrigatório; o sistema DEVE registrar automaticamente a data e o momento de criação.
-- **FR-027**: Os relatórios DEVEM ser exibidos do mais recente para o mais antigo, cada um com a data de criação.
+- **FR-027**: Os relatórios DEVEM ser exibidos do mais recente para o mais antigo, cada um com a data de criação no formato dd/mm/aaaa (sem hora); a ordem entre relatórios do mesmo dia segue o momento de criação registrado (FR-026).
 - **FR-028**: Nos detalhes de um projeto, o administrador DEVE poder criar marcos com descrição obrigatória; os marcos DEVEM ser exibidos na ordem de criação.
 - **FR-029**: Nos detalhes de um projeto, o administrador DEVE poder adicionar itens de cronograma, cada um com atividade e data prevista obrigatórias; os itens DEVEM ser exibidos em ordem crescente de data prevista e, em caso de empate, na ordem de criação.
 - **FR-030**: Relatórios, marcos e itens de cronograma NÃO DEVEM poder ser editados nem excluídos individualmente depois de criados.
@@ -232,7 +243,7 @@ O administrador cadastra as pessoas que acompanham os projetos, como clientes e 
 - **SC-002**: Qualquer cadastro ou a tela de detalhes de qualquer projeto pode ser alcançado a partir do menu principal com no máximo 3 interações.
 - **SC-003**: 100% dos registros salvos continuam disponíveis e inalterados após fechar e reabrir a aplicação no mesmo navegador.
 - **SC-004**: Nenhum dado do sistema é transmitido para fora do navegador durante o uso (0 envios observados ao inspecionar o tráfego de rede em todos os fluxos).
-- **SC-005**: 100% das tentativas de salvar dados inválidos (campo obrigatório vazio, e-mail inválido, e-mail ou nome de time repetido, término antes do início) são bloqueadas e exibem mensagem que identifica o campo com problema.
+- **SC-005**: 100% das tentativas de salvar dados inválidos (campo obrigatório vazio, e-mail inválido, e-mail ou nome de time repetido, término antes do início, texto acima do tamanho máximo) são bloqueadas e exibem mensagem que identifica o campo com problema.
 - **SC-006**: Com até 500 registros em um cadastro, a lista é atualizada após busca ou filtro em até 1 segundo, percebida como imediata pelo administrador.
 - **SC-007**: Todos os fluxos das histórias de usuário podem ser concluídos somente com o teclado e sem perda de conteúdo em telas a partir de 360 px de largura, e a interface atende WCAG 2.1 nível AA.
 - **SC-008**: Em teste com administradores, pelo menos 90% conseguem concluir na primeira tentativa as tarefas de cadastrar um projeto e registrar um relatório, um marco e um item de cronograma nele.
@@ -249,4 +260,3 @@ O administrador cadastra as pessoas que acompanham os projetos, como clientes e 
 - A data de criação dos relatórios é registrada pelo relógio do computador do administrador.
 - "Telas menores" significa larguras a partir de 360 px.
 - O sistema deve funcionar nas duas versões estáveis mais recentes de Chrome, Edge e Firefox, conforme a constituição do projeto.
-- Os limites de tamanho dos campos de texto seguem valores usuais (por exemplo, nomes até 100 caracteres e textos longos até alguns milhares de caracteres) e serão fixados no planejamento.
